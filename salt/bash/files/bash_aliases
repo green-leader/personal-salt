@@ -1,0 +1,34 @@
+# docker util commands
+# command to allow graphics to work
+xhost +local:docker 1>&2>/dev/null
+# logisim
+alias logisim="docker run -v $PWD:/root -v /tmp/.docker.xauth:/tmp/.docker.xauth -e XAUTHORITY:$/tmp.docker.xauth -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --rm -it logisim"
+
+# simplify logging into home vpn
+alias homevpn='sudo openvpn --config .openvpn/client.ovpn --auth-user-pass .openvpn/login.conf'
+
+# sync the current semester's folder with bach on the CSU network
+# coincides with ssh key and entry in sshconfig
+#alias csusync='SEMESTER="2017spring" && COMMAND="rsync -azvu --exclude \".metadata\" " && $COMMAND csu:~/$SEMESTER/ ~/$SEMESTER; $COMMAND ~/$SEMESTER/ csu:~/$SEMESTER/'
+
+function csusync(){
+SEMESTER="2019spring"
+COMMAND="rsync -azvu --exclude=.metadata --exclude=*.o"
+echo "Running two way sync"
+echo "Pull"
+$COMMAND csu:~/$SEMESTER/ ~/$SEMESTER
+echo "Push"
+$COMMAND ~/$SEMESTER/ csu:~/$SEMESTER/
+}
+
+# qemu running windows isn't very nice. Can't think how to automate this
+function onenote(){
+  onenotePID=$(ps -eo ni,pid,args | grep [q]emu | grep [w]in7)
+  #onenotePID=$(ps aux | grep [q]emu | grep [w]in7 | cut -d ' ' -f 3)
+  sudo renice +9 $(echo $onenotePID | cut -d ' ' -f2)
+}
+
+alias critrecord="livestreamer --player 'cvlc --sout file/ts:CriticalRole$(date +%d%m%y).ts --file-caching 1000 --network-caching 1000' --http-header Client-ID=jzkbprff40iqj646a697cyrvl0zt2m6 https://www.twitch.tv/geekandsundry best; wait; ffmpeg -i CriticalRole$(date +%d%m%y).ts CriticalRole$(date +%d%m%y).mp4"
+
+# make temp directory and change to it
+alias ctemp='cd $(mktemp -d)'
