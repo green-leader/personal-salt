@@ -9,7 +9,7 @@ include:
 tmux.conf {{ username }}:
   file.managed:
     - name: {{ home }}/.tmux.conf
-    - source: salt://salt/files/tmux.conf
+    - source: salt://tmux/files/tmux.conf
     - user: {{ username }}
     - group: {{ username }}
 
