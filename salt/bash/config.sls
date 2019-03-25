@@ -12,10 +12,10 @@ include:
     - user: {{ username }}
     - group: {{ username }}
 
-.bash_alias {{ username }}:
+.bash_aliases {{ username }}:
   file.managed:
-    - name: {{ home }}/.bash_alias
-    - source: salt://bash/files/bash_alias
+    - name: {{ home }}/.bash_aliases
+    - source: salt://bash/files/bash_aliases
     - user: {{ username }}
     - group: {{ username }}
 

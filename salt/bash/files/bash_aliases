@@ -32,3 +32,6 @@ alias critrecord="livestreamer --player 'cvlc --sout file/ts:CriticalRole$(date 
 
 # make temp directory and change to it
 alias ctemp='cd $(mktemp -d)'
+
+# Skyrim on white desktop doesn't close cleanly
+alias killskyrim="kill $(ps aux | grep -i tesv.exe | grep -v grep | awk '{print $2}')"
